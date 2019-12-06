@@ -21,6 +21,13 @@
   display: table;
   clear: both;
 }
+
+/* button properties*/
+.btn {
+ background-color: limegreen;
+ padding: 8px;
+ font-size: 16px;
+}
 </style>
 </head>
 
@@ -30,7 +37,31 @@
 <!-- Stuff that's going to be on the website-->
 <body>
 
-<h2>This is where we can have our user input</h2>
+  <h2>This is where we can have our user input</h2>
+  <label for="search_term"><b>Search:</b></label>
+  <input type="text" id="search_term" name="search_term" />
+  <br>
+  <p> <b>Filter recipes : </b>
+   <input type="checkbox" name="food_filter" value="vegetarian">vegetarian</input>
+   <input type="checkbox" name="food_filter" value="vegan">vegan</input>
+   <input type="checkbox" name="food_filter" value="balanced">balanced</input>
+   <input type="checkbox" name="food_filter" value="low-fat">low-fat</input>
+   <input type="checkbox" name="food_filter" value="peanut-free">peanut-free</input>
+  </p>
+  <p> <b>Sort articles : </b>
+   <input type="checkbox" name="news_filter" value="sort by newest">newest</input>
+   <input type="checkbox" name="news_filter" value="sort by oldest">oldest</input>
+   <input type="checkbox" name="news_filter" value="sort by relevance">relevance</input>
+   &nbsp; &nbsp; | &nbsp; &nbsp;  <b>Section: </b>
+   <input type="checkbox" name="news_filter" value="dining">dining</input>
+   <input type="checkbox" name="news_filter" value="food">food</input>
+   <input type="checkbox" name="news_filter" value="business">business</input>
+   <input type="checkbox" name="news_filter" value="health">health</input>
+  </p>
+
+  <button class="btn search">Search</button>
+  <hr>
+
 
 <div class="row">
   <div class="column">

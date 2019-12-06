@@ -30,15 +30,28 @@ def getRecipes(q, params={}):
         return None
     return json.load(safeurl)
 
-#recipes = getRecipes("chicken teriyaki")
-#print(pretty(recipes))
 
-# for recipe in recipes['hits']:
-#     ingredients = recipe['recipe']['ingredients']
-#     for x in ingredients:
-#         print(x['text'])
-#     print("\n")
 
+recipes = getRecipes("fried rice")
+recipes = recipes['hits'][1]['recipe']
+
+
+
+
+class Recipe():
+    def __init__(self, recipeDict):
+        self.title = recipeDict['label']
+        self.image = recipeDict['image']
+        self.link = recipeDict['url']
+        self.numIngredients = len(recipeDict['ingredients'])
+        self.servesPeople = recipeDict['yield']
+
+r1 = Recipe(recipes)
+print(r1.title)
+print(r1.image)
+print(r1.link)
+print(r1.numIngredients)
+print(r1.servesPeople)
 
 
 

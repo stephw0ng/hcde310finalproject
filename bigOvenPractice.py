@@ -30,11 +30,15 @@ def getRecipes(q, params={}):
         return None
     return json.load(safeurl)
 
-recipes = getRecipes("chicken teriyaki")
+#recipes = getRecipes("chicken teriyaki")
 #print(pretty(recipes))
 
-for recipe in recipes['hits']:
-    ingredients = recipe['recipe']['ingredients']
-    for x in ingredients:
-        print(x['text'])
-    print("\n")
+# for recipe in recipes['hits']:
+#     ingredients = recipe['recipe']['ingredients']
+#     for x in ingredients:
+#         print(x['text'])
+#     print("\n")
+
+
+
+

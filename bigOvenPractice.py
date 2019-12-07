@@ -2,7 +2,7 @@ import urllib.parse, urllib.request, urllib.error, json
 
 #application ID: 5df38ba5
 #application key:30589e1f9f7a3953ed9b6ec2e893495e
-baseurl = "https://api.edamam.com/search"
+edamambaseurl = "https://api.edamam.com/search"
 app_key = "30589e1f9f7a3953ed9b6ec2e893495e"
 application_id = "5df38ba5"
 

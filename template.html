@@ -69,21 +69,20 @@
   {% if filter %}
     <h3>{{filter}}</h3>
   {% endif %}
-  {% if prompt %}
-    <h3>{{prompt}}</h3>
-  {% endif %}
+
 
 <div class="row">
   <div class="column">
     <h2>Column 1: Recipes</h2>
 
-    {% for recipe in sortedDictRecipes %}
+    {% for recipe in recipes %}
       <img src="{{recipe.image}}" alt="{{recipe.title}}" width="150" height="150">
       <br>
-      <a href="{{recipe.image}}" target="_blank">{{recipe.title}}</a>
+      <a href="{{recipe.link}}" target="_blank">{{recipe.title}}</a>
       <p>{{recipe.time}} minutes</p>
       <p>{{recipe.numIngredients}} ingredients</p>
       <p>Serves {{recipe.servesPeople}} people</p>
+      <br>
     {% endfor %}
 
   </div>
@@ -93,10 +92,11 @@
   <div class="column">
     <h2>Column 2: NYT Articles</h2>
 
-    {% for article in articlesDict %}
+    {% for article in articles %}
       <a href="{{article.url}}" target="_blank">{{article.headline}}</a>
       <p>By {{article.author}}</p>
       <p>{{article.summary}}</p>
+      <br>
     {% endfor %}
 
   </div>

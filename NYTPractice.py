@@ -43,7 +43,7 @@ class Article:
   def __init__(self, articledict):
       self.headline = articledict['headline']['main']
       self.summary = articledict['snippet']
-      self.url = articlesDict['web_url']
+      self.url = articledict['web_url']
 
       if len(articledict['byline']['person']) != 0:
        author = articledict['byline']['person'][0]

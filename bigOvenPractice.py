@@ -26,7 +26,8 @@ def getRecipes(q, params={}):
     params['app_key'] = app_key
     params['app_id'] = application_id
     params['q'] = q
-    url = baseurl + "?" + urllib.parse.urlencode(params)
+    url = edamambaseurl + "?" + urllib.parse.urlencode(params)
+    print(url)
     safeurl = safeGet(url)
     if safeurl is None:
         return None
@@ -47,17 +48,17 @@ class Recipe():
 
 
 # Grab the big JSON file of all the recipes
-allRecipes = getRecipes("chicken")
+allRecipes = getRecipes("chicken", params={'health':'vegetarian''balanced'})
 
 # Get only the list of recipes
 allRecipes = allRecipes['hits']
 
 # Put all of the recipes into Class Objects of Recipes
 # into a list that will be passed to the HTML file
-listDictRecipes = [Recipe(x['recipe']) for x in allRecipes]
+#listDictRecipes = [Recipe(x['recipe']) for x in allRecipes]
 
 # Sorted the recipes in the list of Recipe objects
-sortedDictRecipes=sorted(listDictRecipes, key=lambda obj: obj.time)
+#sortedDictRecipes=sorted(listDictRecipes, key=lambda obj: obj.time)
 
 print('testing sorted...')
 

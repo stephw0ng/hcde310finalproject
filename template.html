@@ -85,7 +85,7 @@
   <div class="column">
     <h2>Column 2: NYT Articles</h2>
 
-    {% for article in articlesDict}
+    {% for article in articlesDict %}
       <a href="{{article.url}}" target="_blank">{{article.headline}}</a>
       <p>By {{article.author}}</p>
       <p>{{article.summary}}</p>

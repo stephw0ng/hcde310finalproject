@@ -100,7 +100,7 @@ class MainHandler(webapp2.RequestHandler):
             # if no search term, then show the form again with a correction to the user
             # note: this prompt still needs to be added to the HTML
             vals['prompt'] = "How can I greet you if you don't enter a name?"
-            template = JINJA_ENVIRONMENT.get_template('greetform.html')
+            template = JINJA_ENVIRONMENT.get_template('template.html')
             self.response.write(template.render(vals))
 
 application = webapp2.WSGIApplication([('/.*', MainHandler)],

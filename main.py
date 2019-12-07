@@ -79,7 +79,7 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         vals = {}
         searchterm = self.request.get('search_term')
-        go = self.request.get('btn search')
+        go = self.request.get('searchbutton')
         logging.info(searchterm)
         logging.info(go)
         if searchterm:
@@ -89,9 +89,11 @@ class MainHandler(webapp2.RequestHandler):
             # GET RECIPES USING FILTERS
 
             article_filters = self.request.get_all('news_filter')
-            logging.info(article_filters)
+            vals['filter'] = article_filters[0]
             # GET ARTICLES USING FILTERS
-            articleSearch(searchterm, params=articleSort(article_filters))
+            #articleSearch(searchterm, params=articleSort(article_filters))
+            template = JINJA_ENVIRONMENT.get_template('template.html')
+            self.response.write(template.render(vals))
 
             # UPDATE PAGE
             # template = JINJA_ENVIRONMENT.get_template('greetresponse.html')

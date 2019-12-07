@@ -39,6 +39,17 @@ def articleSearch(searchwords, sort="relevance", params={}):
     return json.load(safeurl)
 
 
+class Article:
+   def __init__(self, articledict):
+       self.headline = articledict['headline']['main']
+       self.summary = articledict['snippet']
+       author = articledict['byline']['person'][0]
+       self.author = author['firstname'] + " " + author['lastname']
+       keywords = []
+       for x in dict['keywords']:
+           keywords.append(x['value'])
+       self.keywordslist = keywords
+
 
 # mostviewed = getMostViewed(1)
 # print(pretty(mostviewed))

@@ -20,6 +20,8 @@ def safeGet(url):
         print("Reason: ", e.reason)
     return None
 
+
+# Method to get JSON from API
 def getRecipes(q, params={}):
     params['app_key'] = app_key
     params['app_id'] = application_id
@@ -31,27 +33,34 @@ def getRecipes(q, params={}):
     return json.load(safeurl)
 
 
-
-recipes = getRecipes("fried rice")
-recipes = recipes['hits'][1]['recipe']
-
-
-
-
+# Class for a Recipe
 class Recipe():
     def __init__(self, recipeDict):
         self.title = recipeDict['label']
         self.image = recipeDict['image']
+        self.time = recipeDict['totalTime']
         self.link = recipeDict['url']
         self.numIngredients = len(recipeDict['ingredients'])
         self.servesPeople = recipeDict['yield']
 
-r1 = Recipe(recipes)
-print(r1.title)
-print(r1.image)
-print(r1.link)
-print(r1.numIngredients)
-print(r1.servesPeople)
+
+
+
+# Grab the big JSON file of all the recipes
+allRecipes = getRecipes("chicken")
+
+# Get only the list of recipes
+allRecipes = allRecipes['hits']
+
+# Put all of the recipes into Class Objects of Recipes
+# into a list that will be passed to the HTML file
+listDictRecipes = [Recipe(x['recipe']) for x in allRecipes]
+
+
+
+# for obj in listRecipesObjects:
+#     print("Photo: %s \nTitle: %s \nTime it takes: %s \nNumber of ingredients: %s \nNumber of people it serves: %s"%(obj.image, obj.title, obj.time, obj.numIngredients, obj.servesPeople))
+
 
 
 

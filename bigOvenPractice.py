@@ -55,7 +55,12 @@ allRecipes = allRecipes['hits']
 # Put all of the recipes into Class Objects of Recipes
 # into a list that will be passed to the HTML file
 listDictRecipes = [Recipe(x['recipe']) for x in allRecipes]
-print(len(listDictRecipes))
+
+# Sorted the recipes in the list of Recipe objects
+sortedDictRecipes=sorted(listDictRecipes, key=lambda obj: obj.time)
+
+print('testing sorted...')
+
 
 
 # for obj in listRecipesObjects:

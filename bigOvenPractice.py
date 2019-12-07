@@ -55,7 +55,7 @@ allRecipes = allRecipes['hits']
 # Put all of the recipes into Class Objects of Recipes
 # into a list that will be passed to the HTML file
 listDictRecipes = [Recipe(x['recipe']) for x in allRecipes]
-
+print(len(listDictRecipes))
 
 
 # for obj in listRecipesObjects:

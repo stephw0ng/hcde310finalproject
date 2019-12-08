@@ -47,9 +47,16 @@ class Article:
 
       if len(articledict['byline']['person']) != 0:
        author = articledict['byline']['person'][0]
-       self.author = author['firstname'] + " " + author['lastname']
+       self.author = ""
+       if author['firstname'] is not None and author['lastname'] is not None:
+           self.author = author['firstname'] + " " + author['lastname']
+       else:
+            if author['firstname'] is not None:
+                self.author += author['firstname'] + " "
+            if author['lastname'] is not None:
+                self.author += author['lastname']
       else:
-       self.author = "No author"
+          self.author = "No author"
 
       keywords = []
       for x in articledict['keywords']:
@@ -60,12 +67,13 @@ class Article:
 
 
 # Get the JSON from the API
-searchdict = articleSearch("chicken teriyaki")
+searchdict = articleSearch("jello")
 # Get the list of articlds
 listArticles = searchdict['response']['docs']
+
+
 # Put the articles into Article classes
 articlesDict = [Article(article) for article in listArticles]
-
 
 
 # mostviewed = getMostViewed(1)

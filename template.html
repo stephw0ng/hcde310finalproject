@@ -12,8 +12,20 @@
   float: left;
   width: 50%;
   padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
 }
+
+.test {
+  float: left;
+  width: 25%;
+  padding: 10px;
+}
+
+.test2 {
+  float: right;
+  width: 25%;
+  padding: 10px;
+}
+
 
 /* Clear floats after the columns */
 .row:after {
@@ -21,6 +33,8 @@
   display: table;
   clear: both;
 }
+
+
 
 /* button properties*/
 .btn {
@@ -45,8 +59,7 @@
       <p> <b>Filter recipes : </b>
        <input type="checkbox" name="food_filter" value="vegetarian">vegetarian</input>
        <input type="checkbox" name="food_filter" value="vegan">vegan</input>
-       <input type="checkbox" name="food_filter" value="balanced">balanced</input>
-       <input type="checkbox" name="food_filter" value="low-fat">low-fat</input>
+       <input type="checkbox" name="food_filter" value="sugar-conscious">sugar-conscious</input>
        <input type="checkbox" name="food_filter" value="peanut-free">peanut-free</input>
       </p>
       <p> <b>Sort articles : </b>
@@ -66,25 +79,27 @@
   </form>
   <hr>
 
-  {% if filter %}
-    <h3>{{filter}}</h3>
-  {% endif %}
-
 
 <div class="row">
   <div class="column">
     <h2>Column 1: Recipes</h2>
 
-    {% for recipe in recipes %}
-      <img src="{{recipe.image}}" alt="{{recipe.title}}" width="150" height="150">
-      <br>
-      <a href="{{recipe.link}}" target="_blank">{{recipe.title}}</a>
-      <p>{{recipe.time}} minutes</p>
-      <p>{{recipe.numIngredients}} ingredients</p>
-      <p>Serves {{recipe.servesPeople}} people</p>
-      <br>
-    {% endfor %}
 
+    {% for recipe in recipes %}
+    <div class="row">
+      <div class='column'>
+          <img src="{{recipe.image}}" alt="{{recipe.title}}" width="200" height="200">
+      </div>
+
+      <div class='column'>
+        <a href="{{recipe.link}}" target="_blank">{{recipe.title}}</a>
+        <p>{{recipe.time}} minutes</p>
+        <p>{{recipe.numIngredients}} ingredients</p>
+        <p>Serves {{recipe.servesPeople}} people</p>
+        <br>
+      </div>
+    </div>
+    {% endfor %}
   </div>
 
 

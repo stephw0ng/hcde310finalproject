@@ -22,11 +22,11 @@ def safeGet(url):
 
 
 # Method to get JSON from API
-def getRecipes(q, params={}):
+def getRecipes(q, filters, params={}):
     params['app_key'] = app_key
     params['app_id'] = application_id
     params['q'] = q
-    url = edamambaseurl + "?" + urllib.parse.urlencode(params)
+    url = edamambaseurl + "?" + urllib.parse.urlencode(params) + "&" + recipesWithFilters(filters)
     print(url)
     safeurl = safeGet(url)
     if safeurl is None:
@@ -44,14 +44,22 @@ class Recipe():
         self.numIngredients = len(recipeDict['ingredients'])
         self.servesPeople = recipeDict['yield']
 
+def recipesWithFilters(filterlist):
+    str = ""
+    listlen = len(filterlist)
+    if listlen > 0:
+        for filter in filterlist[:listlen-1]:
+           str += "health=" + filter + "&"
+        str += "health=" + filterlist[listlen-1]
+    return str
 
-
+filters = ["vegetarian","balanced"]
 
 # Grab the big JSON file of all the recipes
-allRecipes = getRecipes("chicken", params={'health':'vegetarian''balanced'})
+allRecipes = getRecipes("taco", filters)
 
 # Get only the list of recipes
-allRecipes = allRecipes['hits']
+#allRecipes = allRecipes['hits']
 
 # Put all of the recipes into Class Objects of Recipes
 # into a list that will be passed to the HTML file

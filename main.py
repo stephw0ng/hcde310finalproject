@@ -18,11 +18,11 @@ app_key = "30589e1f9f7a3953ed9b6ec2e893495e"
 application_id = "5df38ba5"
 
 # Method to get JSON from API
-def getRecipes(q, params={}):
+def getRecipes(q, filters, params={}):
     params['app_key'] = app_key
     params['app_id'] = application_id
     params['q'] = q
-    url = edamambaseurl + "?" + urllib.urlencode(params)
+    url = edamambaseurl + "?" + urllib.urlencode(params) + "&" + recipesWithFilters(filters)
     safeurl = safeGet(url)
     if safeurl is None:
         return None
@@ -45,7 +45,9 @@ NYTbaseurl = "http://api.nytimes.com/svc/"
 # gets JSON from API
 def articleSearch(searchwords, params={}):
     params['api-key'] = api_key
-    params['fq'] = "news_desk:(\"Food\" \"Business\" \"World\" \"Dining\" \"Environment\" \"Health\") AND " + searchwords
+    params['fq'] = "news_desk:(\"Food\" \"Business\" \"World\" \"Dining\" \"Environment\" " \
+                   "\"Health\" \"Home\") " \
+                   "AND " + searchwords
 
     url = NYTbaseurl + "search/v2/articlesearch.json?" + urllib.urlencode(params)
     safeurl = safeGet(url)
@@ -79,11 +81,13 @@ def articleSort(filterlist):
         return {}
 # returns dict with params for filtering recipes
 def recipesWithFilters(filterlist):
-    params = {}
-    for filter in filterlist:
-        if filter == "vegetarian":
-            params['health']
-
+    str = ""
+    listlen = len(filterlist)
+    if listlen > 0:
+        for filter in filterlist[:listlen-1]:
+           str += "health=" + filter + "&"
+        str += "health=" + filterlist[listlen-1]
+    return str
 
 JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'], autoescape=True)
@@ -99,8 +103,8 @@ class MainHandler(webapp2.RequestHandler):
             # if form filled in, get results using this data
             food_filters = self.request.get_all('food_filter')
             logging.info(food_filters)
-            # GET RECIPES USING FILTERS
-            allRecipes = getRecipes(searchterm)['hits']
+            # get recipes using filters
+            allRecipes = getRecipes(searchterm, food_filters)['hits']
             listDictRecipes = [Recipe(x['recipe']) for x in allRecipes]
             sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.time)
             vals['recipes'] = sortedDictRecipes

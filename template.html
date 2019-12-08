@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 <meta>
-<style>
+ <style>
 * {
   box-sizing: border-box;
 }
@@ -11,7 +12,7 @@
 .column {
   float: left;
   width: 50%;
-  padding: 10px;
+  padding: 5px;
   font-size: 1em;
 }
 
@@ -26,90 +27,83 @@ img {
   display: table;
   clear: both;
 }
-
-
-
-/* button properties*/
-.btn {
- background-color: limegreen;
- padding: 8px;
- font-size: 16px;
-}
 </style>
 </head>
 
 
-
-
 <!-- Stuff that's going to be on the website-->
 <body>
-
-  <h2>This is where we can have our user input</h2>
-  <form action="" method="get">
-      <label for="search_term"><b>Search:</b></label>
-      <input type="text" id="search_term" name="search_term" />
-      <br>
-      <p> <b>Filter recipes : </b>
-       <input type="checkbox" name="food_filter" value="vegetarian">vegetarian</input>
-       <input type="checkbox" name="food_filter" value="vegan">vegan</input>
-       <input type="checkbox" name="food_filter" value="sugar-conscious">sugar-conscious</input>
-       <input type="checkbox" name="food_filter" value="peanut-free">peanut-free</input>
-      </p>
-      <p> <b>Sort articles : </b>
-       <input type="radio" name="news_filter" value="newest">newest</input>
-       <input type="radio" name="news_filter" value="oldest">oldest</input>
-       <input type="radio" name="news_filter" value="relevance">relevance</input>
-       <!--
-       &nbsp; &nbsp; | &nbsp; &nbsp;  <b>Section: </b>
-       <input type="checkbox" name="news_filter" value="dining">dining</input>
-       <input type="checkbox" name="news_filter" value="food">food</input>
-       <input type="checkbox" name="news_filter" value="business">business</input>
-       <input type="checkbox" name="news_filter" value="health">health</input>
-       -->
-      </p>
-      <input type="submit" value="Search" name="searchbutton">
-      <!--<button class="btn search" id="btn search">Search</button>-->
-  </form>
-  <hr>
+<div id="pagetitle">
+   <br>
+   <h1>Recipes and Articles</h1>
+   <h4>Search a dish or ingredient, and read about it while you cook!</h4>
+   <br>
+</div>
+<br>
+ <form action="" method="get">
+     <label id=search_label for="search_term"><b>Search:</b></label>
+     <input type="text" id="search_term" name="search_term" />
+     <br>
+     <p> Filter recipes:
+      <input type="checkbox" name="food_filter" value="vegetarian">vegetarian</input>
+      <input type="checkbox" name="food_filter" value="vegan">vegan</input>
+      <input type="checkbox" name="food_filter" value="sugar-conscious">sugar-conscious</input>
+      <input type="checkbox" name="food_filter" value="peanut-free">peanut-free</input>
+     </p>
+     <p> Sort articles:
+      <input type="radio" name="news_filter" value="newest">newest</input>
+      <input type="radio" name="news_filter" value="oldest">oldest</input>
+      <input type="radio" name="news_filter" value="relevance">relevance</input>
+      <!--
+      &nbsp; &nbsp; | &nbsp; &nbsp;  <b>Section: </b>
+      <input type="checkbox" name="news_filter" value="dining">dining</input>
+      <input type="checkbox" name="news_filter" value="food">food</input>
+      <input type="checkbox" name="news_filter" value="business">business</input>
+      <input type="checkbox" name="news_filter" value="health">health</input>
+      -->
+     </p>
+     <input type="submit" value="Search" name="searchbutton">
+     <!--<button class="btn search" id="btn search">Search</button>-->
+ </form>
+ <hr>
 
 
 <div class="row">
-  <div class="column">
-    <h2>Recipes</h2>
+ <div id="recipes" class="column">
+   <h2>Recipes</h2>
 
+   {% for recipe in recipes %}
+   <div class="row">
+     <div class='column'>
+         <img src="{{recipe.image}}" alt="{{recipe.title}}" width="200" height="200">
+     </div>
 
-    {% for recipe in recipes %}
-    <div class="row">
-      <div class='column'>
-          <img src="{{recipe.image}}" alt="{{recipe.title}}" width="200" height="200">
-      </div>
+     <div class='column'>
+       <a href="{{recipe.link}}" target="_blank">{{recipe.title}}</a>
+       <p>{{recipe.time}}</p>
+       <p>{{recipe.numIngredients}} ingredients</p>
+       <p>Serves {{recipe.servesPeople}} people</p>
+       <br>
+     </div>
+   </div>
+   {% endfor %}
+ </div>
 
-      <div class='column'>
-        <a href="{{recipe.link}}" target="_blank">{{recipe.title}}</a>
-        <p>{{recipe.time}} minutes</p>
-        <p>{{recipe.numIngredients}} ingredients</p>
-        <p>Serves {{recipe.servesPeople}} people</p>
-        <br>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
+<!-- Article column -->
+ <div id="articles" class="column">
+   <h2>NYT Articles</h2>
 
+   {% for article in articles %}
+     <a href="{{article.url}}" target="_blank">{{article.headline}}</a>
+     <p>By {{article.author}} &nbsp; | &nbsp; {{article.date}}</p>
+     <p>{{article.summary}}</p>
+     <br>
+   {% endfor %}
 
-
-  <div class="column">
-    <h2>NYT Articles</h2>
-
-    {% for article in articles %}
-      <a href="{{article.url}}" target="_blank">{{article.headline}}</a>
-      <p>By {{article.author}}</p>
-      <p>{{article.summary}}</p>
-      <br>
-    {% endfor %}
-
-  </div>
+ </div>
 </div>
 
 
 </body>
 </html>
+

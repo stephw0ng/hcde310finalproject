@@ -1,0 +1,67 @@
+* {
+ box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+/*.column {*/
+/* float: left;*/
+/* width: 50%;*/
+/* padding: 10px;*/
+/* font-size: 1em;*/
+/*}*/
+
+/*img {*/
+/* width: 60%;*/
+/* height: auto;*/
+/*}*/
+
+/*!* Clear floats after the columns *!*/
+/*.row:after {*/
+/* content: "";*/
+/* display: table;*/
+/* clear: both;*/
+/*}*/
+
+#pagetitle {
+   background-color: #E3F6F5;
+}
+
+#search_label {
+   font-family: "Didot", serif;
+   font-size: 20px;
+}
+
+#recipes {
+   border-right-color: #272343;
+   border-right-width: 2px;
+   border-right-style: double;
+}
+
+h1 {
+   color: #272343;
+   font-family: "Gill Sans MT", sans-serif;
+   text-align: center;
+}
+
+h2 {
+   font-family: "Gill Sans MT", sans-serif;
+   color: #272343;
+}
+
+h4 {
+   font-family: "Gill Sans MT", sans-serif;
+   font-size: 16px;
+   font-weight: normal;
+   font-style: italic;
+   text-align: center;
+}
+
+p {
+   font-family: "Didot", serif;
+}
+
+a {
+    font-family: "Gill Sans MT", sans-serif;
+    color: #272343;
+    font-size: 20px;
+}

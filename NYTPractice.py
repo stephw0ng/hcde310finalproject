@@ -1,4 +1,5 @@
 import urllib.parse, urllib.request, urllib.error, json
+from datetime import datetime
 
 api_key = "VnAC49a37JJMyA6aPbvMGymXVJbeIb4t"
 baseurl = "http://api.nytimes.com/svc/"
@@ -44,6 +45,7 @@ class Article:
       self.headline = articledict['headline']['main']
       self.summary = articledict['snippet']
       self.url = articledict['web_url']
+      self.date = datetime.strptime(articledict['pub_date'], '%Y-%m-%dT%H:%M:%S+%f').strftime('%B %d, %Y')
 
       if len(articledict['byline']['person']) != 0:
        author = articledict['byline']['person'][0]

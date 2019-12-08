@@ -1,5 +1,7 @@
 import json, urllib2, urllib
 import jinja2, os, logging, webapp2
+from datetime import datetime
+
 
 def safeGet(url):
     try:
@@ -12,10 +14,12 @@ def safeGet(url):
         logging.error("Reason: ", e.reason)
     return None
 
+
 ### EDAMAM CODE ###
 edamambaseurl = "https://api.edamam.com/search"
 app_key = "30589e1f9f7a3953ed9b6ec2e893495e"
 application_id = "5df38ba5"
+
 
 # Method to get JSON from API
 def getRecipes(q, filters, params={}):
@@ -28,6 +32,7 @@ def getRecipes(q, filters, params={}):
         return None
     return json.load(safeurl)
 
+
 # Class for a Recipe
 class Recipe():
     def __init__(self, recipeDict):
@@ -37,14 +42,16 @@ class Recipe():
         if time == 0.0:
             self.time = "Time is not given"
         else:
-            self.time = time
+            self.time = str(time) + " minutes"
         self.link = recipeDict['url']
         self.numIngredients = len(recipeDict['ingredients'])
         self.servesPeople = int(recipeDict['yield'])
 
+
 ### NYT CODE ###
 api_key = "VnAC49a37JJMyA6aPbvMGymXVJbeIb4t"
 NYTbaseurl = "http://api.nytimes.com/svc/"
+
 
 # gets JSON from API
 def articleSearch(searchwords, params={}):
@@ -59,51 +66,56 @@ def articleSearch(searchwords, params={}):
         return None
     return json.load(safeurl)
 
+
 # turn each article dict into an Article class
 class Article:
-  def __init__(self, articledict):
-      self.headline = articledict['headline']['main']
-      self.summary = articledict['snippet']
-      self.url = articledict['web_url']
+    def __init__(self, articledict):
+        self.headline = articledict['headline']['main']
+        self.summary = articledict['snippet']
+        self.url = articledict['web_url']
+        self.date = datetime.strptime(articledict['pub_date'], '%Y-%m-%dT%H:%M:%S+%f').strftime('%B %d, %Y')
 
-      if len(articledict['byline']['person']) != 0:
-       author = articledict['byline']['person'][0]
-       self.author = ""
-       if author['firstname'] is not None and author['lastname'] is not None:
-           self.author = author['firstname'] + " " + author['lastname']
-       else:
-            if author['firstname'] is not None:
-                self.author += author['firstname'] + " "
-            if author['lastname'] is not None:
-                self.author += author['lastname']
-      else:
-          self.author = "No author"
+        if len(articledict['byline']['person']) != 0:
+            author = articledict['byline']['person'][0]
+            self.author = ""
+            if author['firstname'] is not None and author['lastname'] is not None:
+                self.author = author['firstname'] + " " + author['lastname']
+            else:
+                if author['firstname'] is not None:
+                    self.author += author['firstname'] + " "
+                if author['lastname'] is not None:
+                    self.author += author['lastname']
+        else:
+            self.author = "No author"
 
-      keywords = []
-      for x in articledict['keywords']:
-          keywords.append(x['value'])
-      self.keywordslist = keywords
-
+        keywords = []
+        for x in articledict['keywords']:
+            keywords.append(x['value'])
+        self.keywordslist = keywords
 
 
 # returns dict with sort param if user chooses a sort option
 def articleSort(filterlist):
     if len(filterlist) > 0:
-        return {'sort':filterlist[0]}
+        return {'sort': filterlist[0]}
     else:
         return {}
+
+
 # returns dict with params for filtering recipes
 def recipesWithFilters(filterlist):
     str = ""
     listlen = len(filterlist)
     if listlen > 0:
-        for filter in filterlist[:listlen-1]:
-           str += "health=" + filter + "&"
-        str += "health=" + filterlist[listlen-1]
+        for filter in filterlist[:listlen - 1]:
+            str += "health=" + filter + "&"
+        str += "health=" + filterlist[listlen - 1]
     return str
 
+
 JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
-    extensions=['jinja2.ext.autoescape'], autoescape=True)
+                                       extensions=['jinja2.ext.autoescape'], autoescape=True)
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -122,7 +134,7 @@ class MainHandler(webapp2.RequestHandler):
             sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.time)
             vals['recipes'] = sortedDictRecipes
 
-            #Get articles using filters
+            # Get articles using filters
             article_filters = self.request.get_all('news_filter')
             searchdict = articleSearch(searchterm, params=articleSort(article_filters))
             listArticles = searchdict['response']['docs']
@@ -141,6 +153,7 @@ class MainHandler(webapp2.RequestHandler):
             vals['prompt'] = "How can I greet you if you don't enter a name?"
             template = JINJA_ENVIRONMENT.get_template('template.html')
             self.response.write(template.render(vals))
+
 
 application = webapp2.WSGIApplication([('/.*', MainHandler)],
                                       debug=True)

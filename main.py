@@ -33,10 +33,14 @@ class Recipe():
     def __init__(self, recipeDict):
         self.title = recipeDict['label']
         self.image = recipeDict['image']
-        self.time = recipeDict['totalTime']
+        time = recipeDict['totalTime']
+        if time == 0.0:
+            self.time = "Time is not given"
+        else:
+            self.time = time
         self.link = recipeDict['url']
         self.numIngredients = len(recipeDict['ingredients'])
-        self.servesPeople = recipeDict['yield']
+        self.servesPeople = int(recipeDict['yield'])
 
 ### NYT CODE ###
 api_key = "VnAC49a37JJMyA6aPbvMGymXVJbeIb4t"

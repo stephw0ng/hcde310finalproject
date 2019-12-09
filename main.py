@@ -132,7 +132,16 @@ class MainHandler(webapp2.RequestHandler):
             # get recipes using filters
             allRecipes = getRecipes(searchterm, food_filters)['hits']
             listDictRecipes = [Recipe(x['recipe']) for x in allRecipes]
-            sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.time, reverse=True)
+
+            # Sort by user input
+            sortInput = self.request.get('food_sort')
+            if sortInput == 'servings':
+                sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.servesPeople, reverse=True)
+            elif(sortInput == 'number of ingredients'):
+                sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.numIngredients)
+            else:
+                sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.numIngredients)
+
             vals['recipes'] = sortedDictRecipes
 
             # Get articles using filters

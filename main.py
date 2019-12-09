@@ -43,7 +43,7 @@ class Recipe():
         if time == 0.0:
             self.timeString = "Time is not given"
         else:
-            self.timeString = str(time) + " minutes"
+            self.timeString = str(int(time)) + " minutes"
         self.link = recipeDict['url']
         self.numIngredients = len(recipeDict['ingredients'])
         self.servesPeople = int(recipeDict['yield'])

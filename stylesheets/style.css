@@ -26,8 +26,10 @@
    background-color: #E3F6F5;
 }
 
+
+/*Didot*/
 #search_label {
-   font-family: "Didot", serif;
+   font-family: "Montserrat", serif;
    font-size: 20px;
 }
 
@@ -57,7 +59,7 @@ h4 {
 }
 
 p {
-   font-family: "Didot", serif;
+   font-family: "Montserrat", sans-serif;
 }
 
 a {

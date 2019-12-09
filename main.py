@@ -144,14 +144,7 @@ class MainHandler(webapp2.RequestHandler):
 
             template = JINJA_ENVIRONMENT.get_template('template.html')
             self.response.write(template.render(vals))
-
-            # UPDATE PAGE
-            # template = JINJA_ENVIRONMENT.get_template('greetresponse.html')
-            # self.response.write(template.render(vals))
         else:
-            # if no search term, then show the form again with a correction to the user
-            # note: this prompt still needs to be added to the HTML
-            vals['prompt'] = "How can I greet you if you don't enter a name?"
             template = JINJA_ENVIRONMENT.get_template('template.html')
             self.response.write(template.render(vals))
 

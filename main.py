@@ -133,7 +133,7 @@ class MainHandler(webapp2.RequestHandler):
             num_results = self.request.get('num_results')
 
             # get recipes using filters
-            allRecipes = getRecipes(searchterm, food_filters)['hits']
+            allRecipes = getRecipes(searchterm, food_filters, params={'to': num_results})['hits']
             listDictRecipes = [Recipe(x['recipe']) for x in allRecipes]
 
             # Sort by user input

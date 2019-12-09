@@ -129,6 +129,9 @@ class MainHandler(webapp2.RequestHandler):
             # if form filled in, get results using this data
             food_filters = self.request.get_all('food_filter')
             logging.info(food_filters)
+
+            num_results = self.request.get('num_results')
+
             # get recipes using filters
             allRecipes = getRecipes(searchterm, food_filters)['hits']
             listDictRecipes = [Recipe(x['recipe']) for x in allRecipes]
@@ -145,11 +148,13 @@ class MainHandler(webapp2.RequestHandler):
             vals['recipes'] = sortedDictRecipes
 
             # Get articles using filters
-            article_filters = self.request.get_all('news_filter')
-            searchdict = articleSearch(searchterm, params=articleSort(article_filters))
+            news_sort = self.request.get_all('news_sort')
+            searchdict = articleSearch(searchterm, params=articleSort(news_sort))
             listArticles = searchdict['response']['docs']
             articlesObjectList = [Article(article) for article in listArticles]
             vals['articles'] = articlesObjectList
+
+
 
             template = JINJA_ENVIRONMENT.get_template('template.html')
             self.response.write(template.render(vals))

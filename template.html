@@ -50,26 +50,30 @@ img {
       <input type="checkbox" name="food_filter" value="sugar-conscious">sugar-conscious</input>
       <input type="checkbox" name="food_filter" value="peanut-free">peanut-free</input>
      </p>
-     <p> Sort recipes:
-      <input type="radio" name="food_sort" value="servings">servings</input>
-      <input type="radio" name="food_sort" value="number of ingredients">number of ingredients</input>
-     </p>
-     <p> Sort articles:
-      <input type="radio" name="news_filter" value="newest">newest</input>
-      <input type="radio" name="news_filter" value="oldest">oldest</input>
-      <input type="radio" name="news_filter" value="relevance">relevance</input>
-     </p>
+     <p>Sort recipes:
+     <select name="food_sort">
+         <option value="servings">servings</option>
+         <option value="number of ingredients">number of ingredients</option>
+     </select>
+    </p>
+    <p>Sort articles:
+     <select name="news_sort">
+         <option value="relevance">relevance</option>
+         <option value="newest">newest</option>
+         <option value="oldest">oldest</option>
+     </select>
+    </p>
+     <p>Number of results:
+     <select name="num_results">
+         <option value=10>10</option>
+         <option value=20>20</option>
+         <option value=30>30</option>
+         <option value=30>40</option>
+         <option value=30>50</option>
+     </select>
+    </p>
 
-      <!--
-      &nbsp; &nbsp; | &nbsp; &nbsp;  <b>Section: </b>
-      <input type="checkbox" name="news_filter" value="dining">dining</input>
-      <input type="checkbox" name="news_filter" value="food">food</input>
-      <input type="checkbox" name="news_filter" value="business">business</input>
-      <input type="checkbox" name="news_filter" value="health">health</input>
-      -->
-     </p>
      <input type="submit" value="Search" name="searchbutton">
-     <!--<button class="btn search" id="btn search">Search</button>-->
  </form>
  <hr>
 

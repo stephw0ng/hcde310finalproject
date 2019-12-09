@@ -96,11 +96,11 @@ class Article:
 
 
 # returns dict with sort param if user chooses a sort option
-def articleSort(filterlist):
-    if len(filterlist) > 0:
-        return {'sort': filterlist[0]}
-    else:
-        return {}
+# def articleSort(filterlist, page):
+#     if len(filterlist) > 0:
+#         return {'sort': filterlist[0]}
+#     else:
+#         return {}
 
 
 # returns dict with params for filtering recipes
@@ -131,6 +131,7 @@ class MainHandler(webapp2.RequestHandler):
             logging.info(food_filters)
 
             num_results = self.request.get('num_results')
+            pages = (int(num_results) / 10)
 
             # get recipes using filters
             allRecipes = getRecipes(searchterm, food_filters, params={'to': num_results})['hits']
@@ -145,16 +146,24 @@ class MainHandler(webapp2.RequestHandler):
             else:
                 sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.numIngredients)
 
+
+            # sort articles
+            news_sort = self.request.get('news_sort')
+
+            allArticles = []
+            for p in range(pages):
+                searchdict = articleSearch(searchterm, params={'sort':news_sort, 'page':p})
+                listArticles = searchdict['response']['docs']
+                articlesObjectList = [Article(article) for article in listArticles]
+                allArticles.extend(articlesObjectList)
+
+            vals['searchterm'] = searchterm
+            vals['numresults'] = num_results
+            vals['recipefilters'] = food_filters
+            vals['recipesort'] = sortInput
             vals['recipes'] = sortedDictRecipes
-
-            # Get articles using filters
-            news_sort = self.request.get_all('news_sort')
-            searchdict = articleSearch(searchterm, params=articleSort(news_sort))
-            listArticles = searchdict['response']['docs']
-            articlesObjectList = [Article(article) for article in listArticles]
-            vals['articles'] = articlesObjectList
-
-
+            vals['newssort'] = news_sort
+            vals['articles'] = allArticles
 
             template = JINJA_ENVIRONMENT.get_template('template.html')
             self.response.write(template.render(vals))

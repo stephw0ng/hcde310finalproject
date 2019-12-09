@@ -77,7 +77,15 @@ img {
  </form>
  <hr>
 
-
+<h2>{{numresults}} results for {{searchterm}}</h2>
+<p>Filters:
+    {% for filter in recipefilters %}
+    <i>{{filter}}</i>
+    {% endfor %}
+</p>
+<p>
+    Sort recipes by <i>{{recipesort}}</i> and articles by <i>{{newssort}}</i>
+</p>
 <div class="row">
  <div id="recipes" class="column">
    <h2>Recipes</h2>
@@ -100,7 +108,7 @@ img {
  </div>
 
 <!-- Article column -->
- <div id="articles" class="column">
+ <div class="column">
    <h2>NYT Articles</h2>
 
    {% for article in articles %}

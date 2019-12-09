@@ -2,26 +2,6 @@
  box-sizing: border-box;
 }
 
-/* Create two equal columns that floats next to each other */
-/*.column {*/
-/* float: left;*/
-/* width: 50%;*/
-/* padding: 10px;*/
-/* font-size: 1em;*/
-/*}*/
-
-/*img {*/
-/* width: 60%;*/
-/* height: auto;*/
-/*}*/
-
-/*!* Clear floats after the columns *!*/
-/*.row:after {*/
-/* content: "";*/
-/* display: table;*/
-/* clear: both;*/
-/*}*/
-
 #pagetitle {
    background-color: #E3F6F5;
 }

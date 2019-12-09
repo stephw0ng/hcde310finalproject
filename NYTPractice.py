@@ -27,10 +27,8 @@ def getMostViewed(period, params={}):
        return None
    return json.load(safeurl)
 
-def articleSearch(searchwords, sort="relevance", params={}):
+def articleSearch(searchwords, params={}):
    params['api-key'] = api_key
-   params['sort'] = sort
-   #params['fq'] = "news_desk:(\"food\") AND subject:(\"" + searchwords + "\")"
    params['fq'] = "news_desk:(\"Food\" \"Business\" \"World\" \"Dining\" \"Environment\" \"Health\") AND " + searchwords
 
    url = baseurl + "search/v2/articlesearch.json?" + urllib.parse.urlencode(params)
@@ -104,3 +102,18 @@ articlesDict = [Article(article) for article in listArticles]
 #     print(dict['snippet'])
 #     print(dict['keywords'][:4])
 #     print("\n")
+
+pages = 3
+news_sort = 'newest'
+searchterm = 'Indian'
+
+allArticles = []
+for p in range(pages):
+    searchdict = articleSearch(searchterm, params={'sort':news_sort, 'page':p})
+    listArticles = searchdict['response']['docs']
+    articlesObjectList = [Article(article) for article in listArticles]
+    allArticles.extend(articlesObjectList)
+
+print(len(allArticles))
+for a in allArticles:
+    print(a.author)

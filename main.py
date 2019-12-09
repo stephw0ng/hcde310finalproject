@@ -39,10 +39,11 @@ class Recipe():
         self.title = recipeDict['label']
         self.image = recipeDict['image']
         time = recipeDict['totalTime']
+        self.time = time
         if time == 0.0:
-            self.time = "Time is not given"
+            self.timeString = "Time is not given"
         else:
-            self.time = str(time) + " minutes"
+            self.timeString = str(time) + " minutes"
         self.link = recipeDict['url']
         self.numIngredients = len(recipeDict['ingredients'])
         self.servesPeople = int(recipeDict['yield'])
@@ -131,7 +132,7 @@ class MainHandler(webapp2.RequestHandler):
             # get recipes using filters
             allRecipes = getRecipes(searchterm, food_filters)['hits']
             listDictRecipes = [Recipe(x['recipe']) for x in allRecipes]
-            sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.time)
+            sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.time, reverse=True)
             vals['recipes'] = sortedDictRecipes
 
             # Get articles using filters

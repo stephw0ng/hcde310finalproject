@@ -8,3 +8,6 @@ We utilized two APIs: Edamam and New York Times. Users are able to search for a 
 recipes and articles pertaining to their search. While eating or waiting for their food to cook, users can read the interesting articles.
 
 We also wanted to ensure that our web application met different dietary needs and interests. Therefore, we give users the options to filter their recipe results by dietary restrictions, sort the results from both APIs, and choose how many results they are shown.
+
+Our working application can be tried here: https://finalproject310.appspot.com/
+A video demonstration can be watched here: https://youtu.be/6-4IKgFyv00

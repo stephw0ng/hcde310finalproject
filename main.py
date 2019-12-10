@@ -121,33 +121,35 @@ JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.di
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         vals = {}
+        # Get users search term
         searchterm = self.request.get('search_term')
         go = self.request.get('searchbutton')
         logging.info(searchterm)
         logging.info(go)
+        # Check if user inputed a search term
         if searchterm:
             # if form filled in, get results using this data
+            # Get the food filters
             food_filters = self.request.get_all('food_filter')
             logging.info(food_filters)
-
+            # Get the number of results to show from user
             num_results = self.request.get('num_results')
             pages = (int(num_results) / 10)
 
-            # get recipes using filters
+            # Get recipes using filters
             allRecipes = getRecipes(searchterm, food_filters, params={'to': num_results})['hits']
+            # Put the recipes into Recipe objects
             listDictRecipes = [Recipe(x['recipe']) for x in allRecipes]
-
-            # Sort by user input
+            # Sort Recipe objects by user input (either by number of people the recipe serves
+            # or by the number of ingredients
             sortInput = self.request.get('food_sort')
             if sortInput == 'servings':
                 sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.servesPeople, reverse=True)
             elif(sortInput == 'number of ingredients'):
                 sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.numIngredients)
-            else:
-                sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.numIngredients)
 
 
-            # sort articles
+            # Sort articles
             news_sort = self.request.get('news_sort')
 
             allArticles = []

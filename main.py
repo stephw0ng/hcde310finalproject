@@ -79,13 +79,10 @@ class Article:
         if len(articledict['byline']['person']) != 0:
             author = articledict['byline']['person'][0]
             self.author = ""
-            if author['firstname'] is not None and author['lastname'] is not None:
-                self.author = author['firstname'] + " " + author['lastname']
-            else:
-                if author['firstname'] is not None:
-                    self.author += author['firstname'] + " "
-                if author['lastname'] is not None:
-                    self.author += author['lastname']
+            if author['firstname'] is not None:
+                self.author += author['firstname'] + " "
+            if author['lastname'] is not None:
+                self.author += author['lastname']
         else:
             self.author = "No author"
 
@@ -93,15 +90,6 @@ class Article:
         for x in articledict['keywords']:
             keywords.append(x['value'])
         self.keywordslist = keywords
-
-
-# returns dict with sort param if user chooses a sort option
-# def articleSort(filterlist, page):
-#     if len(filterlist) > 0:
-#         return {'sort': filterlist[0]}
-#     else:
-#         return {}
-
 
 # returns dict with params for filtering recipes
 def recipesWithFilters(filterlist):
@@ -149,9 +137,9 @@ class MainHandler(webapp2.RequestHandler):
                 sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.numIngredients)
 
 
-            # Sort articles
+            # takes input for how the articles should be sorted
             news_sort = self.request.get('news_sort')
-
+            # creates a list of Article objects with the requested number of results
             allArticles = []
             for p in range(pages):
                 searchdict = articleSearch(searchterm, params={'sort':news_sort, 'page':p})
@@ -159,6 +147,7 @@ class MainHandler(webapp2.RequestHandler):
                 articlesObjectList = [Article(article) for article in listArticles]
                 allArticles.extend(articlesObjectList)
 
+            # pass values to the HTML template
             vals['searchterm'] = searchterm
             vals['numresults'] = num_results
             vals['recipefilters'] = food_filters
@@ -169,6 +158,7 @@ class MainHandler(webapp2.RequestHandler):
 
             template = JINJA_ENVIRONMENT.get_template('template.html')
             self.response.write(template.render(vals))
+        # if no search term, display blank template
         else:
             template = JINJA_ENVIRONMENT.get_template('template.html')
             self.response.write(template.render(vals))

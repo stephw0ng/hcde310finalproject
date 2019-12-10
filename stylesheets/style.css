@@ -1,3 +1,5 @@
+/* Style for HTML page */
+
 * {
  box-sizing: border-box;
 }
@@ -6,8 +8,6 @@
    background-color: #E3F6F5;
 }
 
-
-/*Didot*/
 #search_label {
    font-family: "Montserrat", serif;
    font-size: 20px;

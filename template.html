@@ -31,15 +31,16 @@ img {
 </head>
 
 
-<!-- Stuff that's going to be on the website-->
+<!-- Template for the website -->
 <body>
 <div id="pagetitle">
    <br>
-   <h1>Recipes and Articles</h1>
+   <h1>Brain Food</h1>
    <h4>Search a dish or ingredient, and read about it while you cook and eat!</h4>
    <br>
 </div>
 <br>
+<!-- Form to input search, filters, sort, and number of results returned -->
  <form action="" method="get">
      <label id=search_label for="search_term"><b>Search:</b></label>
      <input type="text" id="search_term" name="search_term" />
@@ -76,7 +77,7 @@ img {
      <input type="submit" value="Search" name="searchbutton">
  </form>
  <hr>
-
+<!-- Displays what filters the user inputted -->
 <h2>{{numresults}} results for {{searchterm}}</h2>
 <p>Filters:
     {% for filter in recipefilters %}
@@ -86,6 +87,8 @@ img {
 <p>
     Sort recipes by <i>{{recipesort}}</i> and articles by <i>{{newssort}}</i>
 </p>
+
+<!-- Recipes column -->
 <div class="row">
  <div id="recipes" class="column">
    <h2>Recipes</h2>

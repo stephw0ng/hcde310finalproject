@@ -17,8 +17,8 @@ def safeGet(url):
 
 ### EDAMAM CODE ###
 edamambaseurl = "https://api.edamam.com/search"
-app_key = "30589e1f9f7a3953ed9b6ec2e893495e"
-application_id = "5df38ba5"
+app_key = "YOUR APP KEY HERE
+application_id = "YOUR APPLICATION ID HERE"
 
 
 # Method to get JSON from API
@@ -50,7 +50,7 @@ class Recipe():
 
 
 ### NYT CODE ###
-api_key = "VnAC49a37JJMyA6aPbvMGymXVJbeIb4t"
+api_key = "YOUR API KEY HERE"
 NYTbaseurl = "http://api.nytimes.com/svc/"
 
 
@@ -91,6 +91,7 @@ class Article:
             keywords.append(x['value'])
         self.keywordslist = keywords
 
+
 # returns dict with params for filtering recipes
 def recipesWithFilters(filterlist):
     str = ""
@@ -100,7 +101,6 @@ def recipesWithFilters(filterlist):
             str += "health=" + filter + "&"
         str += "health=" + filterlist[listlen - 1]
     return str
-
 
 JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
                                        extensions=['jinja2.ext.autoescape'], autoescape=True)
@@ -114,9 +114,10 @@ class MainHandler(webapp2.RequestHandler):
         go = self.request.get('searchbutton')
         logging.info(searchterm)
         logging.info(go)
+
         # Check if user inputed a search term
         if searchterm:
-            # if form filled in, get results using this data
+            # If form filled in, get results using this data
             # Get the food filters
             food_filters = self.request.get_all('food_filter')
             logging.info(food_filters)
@@ -137,9 +138,10 @@ class MainHandler(webapp2.RequestHandler):
                 sortedDictRecipes = sorted(listDictRecipes, key=lambda obj: obj.numIngredients)
 
 
-            # takes input for how the articles should be sorted
+            # Takes input for how the articles should be sorted
             news_sort = self.request.get('news_sort')
-            # creates a list of Article objects with the requested number of results
+
+            # Creates a list of Article objects with the requested number of results
             allArticles = []
             for p in range(pages):
                 searchdict = articleSearch(searchterm, params={'sort':news_sort, 'page':p})
@@ -147,7 +149,7 @@ class MainHandler(webapp2.RequestHandler):
                 articlesObjectList = [Article(article) for article in listArticles]
                 allArticles.extend(articlesObjectList)
 
-            # pass values to the HTML template
+            # Pass values to the HTML template
             vals['searchterm'] = searchterm
             vals['numresults'] = num_results
             vals['recipefilters'] = food_filters
@@ -158,7 +160,7 @@ class MainHandler(webapp2.RequestHandler):
 
             template = JINJA_ENVIRONMENT.get_template('template.html')
             self.response.write(template.render(vals))
-        # if no search term, display blank template
+        # If no search term, display blank template
         else:
             template = JINJA_ENVIRONMENT.get_template('template.html')
             self.response.write(template.render(vals))

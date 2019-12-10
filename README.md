@@ -1,4 +1,4 @@
-# Interactive Systems Design and Technology Final Project
+# Brain Food
 ## By Stephanie Wong and Lia Johansen
 
 

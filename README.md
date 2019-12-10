@@ -14,7 +14,5 @@ Our working application can be demoed here: https://finalproject310.appspot.com/
 A video demonstration can be watched here: https://youtu.be/6-4IKgFyv00
 
 To get your own free API keys, sign up for Edamam and NYT accounts.
-
 Edamam: https://developer.edamam.com/edamam-recipe-api
-
 NYT: https://developer.nytimes.com/docs/articlesearch-product/1/overview
